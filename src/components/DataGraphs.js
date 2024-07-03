@@ -1,6 +1,6 @@
 import React from "react";
 import "../App.css"
-import { LineChart,Line } from "recharts";
+//import { LineChart,Line } from "recharts";
 
 const DataGraphs = ()=>{
     return<div className="flex flex-row justify-around h-80 mt-8 ">
