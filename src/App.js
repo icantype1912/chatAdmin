@@ -19,7 +19,7 @@ const App = () => {
   },[toggle,auth.currentUser])
   return (
     <>
-    <div className="h-screen">
+    <div className="h-screen overflow-hidden">
       
       <BrowserRouter>
       <Navlink/>

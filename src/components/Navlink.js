@@ -9,9 +9,14 @@ const Navlink = ()=>{
     const handleDash = ()=>{
         Navigate("/")
     }
-    return<div className="flex gap-10 pl-8 pr-4 bg-teal-50 h-12 text-teal-950">
-        <button onClick={handleDash}>Dashboard</button>
-        <button onClick={handleUsers}>Users</button>
+    return<div className="navlink">
+        <div className="flex gap-10 justify-between pl-4 pr-8 bg-transparent h-16 text-teal-950">
+            <h1 className="mt-2 text-4xl">ChatAdmin</h1>
+            <div className="flex gap-10">
+                <button onClick={handleDash}>Dashboard</button>
+                <button onClick={handleUsers}>Users</button>
+            </div>
+        </div>
     </div>
 }
 
