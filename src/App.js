@@ -12,11 +12,9 @@ import { AnimatePresence } from "framer-motion";
 const App = () => {
   const auth = getAuth();
   const [toggle,setToggle] = useState(0)
-  const [user,setUser] = useState(null)
 
 
   useEffect(()=>{
-    setUser(auth.currentUser)
   },[toggle,auth.currentUser])
   return (
     <>

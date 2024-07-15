@@ -7,16 +7,27 @@ import { addDoc,collection,getFirestore } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
 import { validateEmail,validatePassword } from "../validator";
 
-const firebaseConfig = {
-    apiKey: "AIzaSyCWPADseIx3PRGx3j4Tgh6TS9JOuwt2GE4",
-    authDomain: "chatapp-c4efb.firebaseapp.com",
-    databaseURL: "https://chatapp-c4efb-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "chatapp-c4efb",
-    storageBucket: "chatapp-c4efb.appspot.com",
-    messagingSenderId: "636388695939",
-    appId: "1:636388695939:web:de30f9ca7481f56d8560b6",
-    measurementId: "G-8TQXCRZKGK"
-};
+import {
+    apiKey,
+    authDomain,
+    databaseURL,
+    storageBucket,
+    messagingSenderId,
+    appId,
+    measurementId,
+    projectId,
+  } from "../firebaseconfig.js";
+  
+  const firebaseConfig = {
+    apiKey: apiKey,
+    authDomain: authDomain,
+    databaseURL: databaseURL,
+    projectId: projectId,
+    storageBucket: storageBucket,
+    messagingSenderId: messagingSenderId,
+    appId: appId,
+    measurementId: measurementId,
+  };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
