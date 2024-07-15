@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../App.css";
 import { getCountFromServer, getFirestore, query, where, collection,onSnapshot } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
-
+import { MessagesAreaGraph } from "./MessagesAreaGraph.js";
 import {
     apiKey,
     authDomain,
@@ -40,7 +40,7 @@ const DataSquares = () => {
         try {
             const coll = collection(db, "Users");
             const snapshot = await getCountFromServer(coll);
-            setTotalUsers(snapshot.data().count);
+            setTotalUsers(snapshot.data().count - 1);
         } catch (error) {
             console.error("Error fetching user count:", error);
         }
@@ -124,12 +124,15 @@ const DataSquares = () => {
                 <h2 className="text-4xl">{totalUsersToday}</h2>
             </div>
             <div className="rounded-xl text-teal-950 text-lg flex flex-col h-36 w-1/5 p-4 justify-around content-centre bg-teal-50">
-                <h4>Total messages sent today</h4>
-                <h2 className="text-4xl">{totalMessagesToday}</h2>
+                <h4>Total Messages</h4>
+                <div className="flex justify-between items-center">
+                    <h2 className="text-4xl">{totalMessages}</h2>
+                    <MessagesAreaGraph/>
+                </div>
             </div>
             <div className="rounded-xl text-teal-950 text-lg flex flex-col h-36 w-1/5 p-4 justify-around content-centre bg-teal-50">
-                <h4>Total Messages</h4>
-                <h2 className="text-4xl">{totalMessages}</h2>
+                <h4>Total messages sent today</h4>
+                <h2 className="text-4xl">{totalMessagesToday}</h2>
             </div>
         </div>
     );

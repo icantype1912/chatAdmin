@@ -53,10 +53,11 @@ const UserTable = () => {
   const [editValues, setEditValues] = useState({ Phone: "", DOB: "" });
 
   const columns = [
-    { field: "Name", headerName: "Username", width: 200 },
+    { field: "Name", headerName: "Username", width: 170 },
     { field: "email", headerName: "Email", width: 250 },
-    { field: "Phone", headerName: "Phone", width: 200 },
-    { field: "DOB", headerName: "DOB", width: 200 },
+    { field: "Phone", headerName: "Phone", width: 170 },
+    { field: "DOB", headerName: "DOB", width: 170 },
+    { field: "isActive",headerName: "Active",width:120},
     {
       field: "actions",
       headerName: "Actions",
@@ -99,7 +100,14 @@ const UserTable = () => {
     setAnchorEl(null);
   };
 
-
+  const handleDelete = async()=>{
+    if (currentRow) {
+        const docRef = doc(db, "Users", currentRow.id);
+        await updateDoc(docRef, {
+          isActive:false
+        });
+      }
+  };
 
   const handleEdit = (event) => {
     setEditPopoverAnchor(event.currentTarget);
@@ -138,7 +146,7 @@ const UserTable = () => {
         onClose={handleMenuClose}
       >
         <MenuItem onClick={handleEdit}>Update</MenuItem>
-        <MenuItem>Delete</MenuItem>
+        <MenuItem onClick = {handleDelete}>Delete</MenuItem>
       </Menu>
       <Popover
         open={Boolean(editPopoverAnchor)}

@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect,useState } from "react";
 import "../App.css";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend } from "recharts";
+import { LineChart, Line, XAxis, YAxis, Tooltip, Legend } from "recharts";
 import { PieChart, Pie, ResponsiveContainer } from 'recharts';
 import { getFirestore, query, where, collection,onSnapshot } from "firebase/firestore";
 import { initializeApp } from "firebase/app";
@@ -58,12 +58,15 @@ const DataGraphs = () => {
     },[])
 
     useEffect(() => {
+        const colors = ["#E899A6","#A6E899","#99A6E8"]
+        let cnt = 0;
         let msgCount = [];
         let tally = [];
         userList.forEach(user => {
             if(!(tally.includes(user.user))){
                 tally.push(user.user)
-                msgCount.push({name:user.user,msgCnt:1})
+                msgCount.push({name:user.user,msgCnt:1,fill:colors[cnt]})
+                cnt++
             }
             else{
                 msgCount.forEach(x=>{
@@ -106,13 +109,13 @@ const DataGraphs = () => {
         <div className="flex flex-row justify-around h-80 mt-8">
             <div className="rounded-lg border-2 w-8/12 bg-teal-50 h-5/6 flex justify-start items-start pt-3 ">
             {receiverMsgCount?
-                <BarChart width={800} height={255} data={receiverMsgCount} >
-                    <Bar type="monotone" dataKey="ActiveReceivers" fill="#004D40" />
+                <LineChart width={800} height={255} data={receiverMsgCount} >
                     <XAxis dataKey="name" />
                     <YAxis />
-                    <Tooltip />
+                    <Tooltip/>
                     <Legend />
-                </BarChart>:<h1 className="ml-72 mt-24 text-3xl text-teal-950">No Activity Today</h1>}
+                    <Line type="monotone" dataKey="ActiveReceivers" stroke="#004D40" />
+                </LineChart>:<h1 className="ml-72 mt-24 text-3xl text-teal-950">No Activity Today</h1>}
             </div>
         <div className="rounded-lg border-2 w-3/12 bg-teal-50 h-5/6">
         {userMsgCount?
@@ -120,13 +123,14 @@ const DataGraphs = () => {
         <PieChart width={400} height={400}>
           <Pie
             dataKey="msgCnt"
-            isAnimationActive={false}
+            isAnimationActive={true}
             data={userMsgCount}
             cx="50%"
             cy="50%"
             outerRadius={80}
             fill="#004D40"
-            label
+            labelLine={false}
+            label={renderCustomizedLabel}
           />
           <Tooltip />
         </PieChart>
@@ -138,3 +142,17 @@ const DataGraphs = () => {
 };
 
 export default DataGraphs;
+
+
+const RADIAN = Math.PI / 180;
+const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+  const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+  const x = cx + radius * Math.cos(-midAngle * RADIAN);
+  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+  return (
+    <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+      {`${(percent * 100).toFixed(0)}%`}
+    </text>
+  );
+};
