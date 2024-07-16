@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useState} from "react";
 import "../App.css"
 import TopBar from "../components/TopBar";
 import UserTable from "../components/UserTable";
@@ -13,13 +13,14 @@ const Users = ()=>{
             x: '0vw'
         }
     }
+    const [search,setSearch] = useState("")
     return<motion.div className="users"
     variants={routeVariants}
     initial="initial"
     animate="final"
     >
-        <TopBar/>
-        <UserTable/>
+        <TopBar search = {search} setSearch = {setSearch}/>
+        <UserTable search = {search} />
     </motion.div>
 }
 
